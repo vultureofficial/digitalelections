@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<title>Graph view</title>
+		<meta name="viewport" content="width=device-width">
+		<script src="https://cdn.anychart.com/releases/8.0.0/js/anychart-base.min.js"></script>
+		<script>
+		 app.EnableBackKey( false );
+		</script>
+		<style>
+			body { background-color: #ffffff; }
+		</style>
+	</head>
+	<body>
+		
+        <div id="container"></div>
+        
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+	    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+        <script type="text/javascript">
+        const firebaseConfig = {
+          apiKey: "AIzaSyDYjcGhi4yNrncn9tsutOMLYUK9a_F4H2c",
+          authDomain: "b4now-d4e6c.firebaseapp.com",
+          projectId: "b4now-d4e6c",
+          storageBucket: "b4now-d4e6c.appspot.com",
+          messagingSenderId: "707810219534",
+          appId: "1:707810219534:web:fcaf979b53bb5743c70e5f"
+        };
+      // Initialize Firebase
+      const dataBaseInit = firebase.initializeApp(firebaseConfig);
+
+        anychart.onDocumentReady(function() {
+
+        
+        
+        
+        const ref = firebase.firestore().collection('politicalParties');
+    	ref.get().then((querySnapshot) => {
+    	    var data = {
+                header: ["Name", "Votes"],
+                rows: []
+            };
+            var arr = []; 
+    		querySnapshot.forEach((doc) => {
+    		    var id = doc.id; 
+                var data = doc.data(); 
+                var name = data.name; 
+                var votes = data.votes; 
+                var logo = data.logo; 
+                
+                //createPost(id, name, votes, logo);
+                arr.push([name, votes]);  
+                //data.rows.push([name, votes]) 
+    		 });
+    		 
+    		 data.rows = arr;
+    		 // create the chart
+            var chart = anychart.column();
+        
+            // add data
+            chart.data(data);
+        
+            // set the chart title
+            chart.title('SA voting demographics');
+            chart.container("container");
+            chart.draw();
+    	});
+        
+
+        
+
+        });
+
+
+        </script>
+	</body>
+</html>
