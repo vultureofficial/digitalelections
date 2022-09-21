@@ -5,20 +5,29 @@
 
 
 <style>
-	body { background-color: #ffffff; }
+	body { 
+    background-image: url(Img/BG.jpg);
+    background-size: cover;
+  }
     /* Bordered form */
     #form {
       border: 3px solid #f1f1f1;
+      position: fixed;
+      width: 98%;
+      top: 15rem;
+      z-index: -1000;
     }
     
     /* Full-width inputs */
     input[type=text], input[type=password] {
-      width: 100%;
+      width: 50rem;
       padding: 12px 20px;
       margin: 8px 0;
-      display: inline-block;
+      display: flex;
       border: 1px solid #ccc;
       box-sizing: border-box;
+      margin: 0px 0px 0rem 16rem;
+      border-radius: 3rem 3rem 0rem 0rem;
     }
     
     /* Set a style for all buttons */
@@ -29,9 +38,21 @@
       margin: 8px 0;
       border: none;
       cursor: pointer;
-      width: 100%;
+      width: 50rem;
+      display: flex;
+      margin: 0rem 0rem 0rem 16rem;
+      border-radius: 0rem 0rem 3rem 3rem;
+      font-size: 1rem;
+      text-align: center;
+      line-height: 1em;
     }
-    
+
+    button span {
+      display: block;
+      margin: 0rem 0rem 0rem 20rem;
+      text-align: center; 
+      align-self: center;
+    }
     /* Add a hover effect for buttons */
     button:hover {
       opacity: 0.8;
@@ -94,14 +115,14 @@
 
 					/* Add styles to the form container */
 					.form-container {
-						max-width: 300px;
+						width: 10rem;
 						padding: 10px;
 						background-color: white;
 					}
 
 					/* Full-width input fields */
 					.form-container input[type=text], .form-container input[type=password] {
-						width: 100%;
+						width: 50rem;
 						padding: 15px;
 						margin: 5px 0 22px 0;
 						border: none;
@@ -121,7 +142,7 @@
 						padding: 16px 20px;
 						border: none;
 						cursor: pointer;
-						width: 100%;
+						width: 50%;
 						margin-bottom:10px;
 						opacity: 0.8;
 					}
@@ -135,6 +156,15 @@
 					.form-container .btn:hover, .open-button:hover {
 						opacity: 1;
 					}    
+
+          #lbl {
+            margin: 0rem 0rem 0rem 16rem;
+            display: none;
+          }
+
+          #error {
+            color: #ff0000
+          }
     
     /* Change styles for span and cancel button on extra small screens */
     @media screen and (max-width: 300px) {
@@ -145,22 +175,22 @@
       .cancelbtn {
         width: 100%;
       }
+      button {
+        margin: 0rem 0rem 0rem 4rem;
+      }
     }
 </style>
 
 <body>
 
 	<div id="form">
-      <div class="imgcontainer">
-        <img src="Img/OIP.jpg" alt="Avatar" class="avatar">
-      </div>
     
       <div class="container">
     
-        <label for="psw"><b>National ID</b></label>
+        <label id="lbl" for="psw"><b>National ID</b></label>
         <input id="nid" type="text" placeholder="Enter National ID" name="psw" required>
     
-        <button id="reg" onclick="Validate()">Register</button>
+        <button id="reg" onclick="Validate()"><span>Register</span></button>
 				<div id="error"></div>
       </div>
     </div>

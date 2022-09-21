@@ -35,57 +35,77 @@ let createUser = function(id) {
 }
 
 
-    let response = function() {
-        var id = document.getElementById("webID").innerText; 
-        console.log(id);
-        var docRef = firebase.firestore().collection('politicalParties').doc(id);
-        console.log(docRef); 
-
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                var data = doc.data();
-                var vt = data.votes; 
-                vt++; 
-                
-                var pP = firebase.firestore().collection('politicalParties').doc(id);
-
-                var setWithMerge = pP.set({
-                    votes: vt
-                }, { merge: true });
-                    alert("You have sucessfully voted for " + name); 
-            } else {
-                // doc.data() will be undefined in this case
-                alert("No such document!");
-            }
-        }).catch((error) => {
-            alert("Error getting document:" + error);
-            console.log("Error getting document:", error);
-        });  
-        
-    }
-
 
 
 let createPost = function(id, name, votes, logo) {
+    var layout = document.getElementById('main'); 
     let img = document.createElement('img');
     let anchor = document.createElement('a');
-    let div = document.createElement('div'); 
-    div.className = "inner-gallery";
+    var outer_div = document.createElement('div'); 
+    outer_div.className = "post " + pickSize(); 
+
 
     anchor.onclick = function() {
         //alert(id + ":" + name + ":" + votes); 
-        document.getElementById("tmp").innerTet = name;
+        document.getElementById("tmp").innerText = name;
         document.getElementById("webID").innerText = id;
-        document.getElementById("myForm").styl.display = "block";
+        document.getElementById("myForm").style.display = "block";
+
+        var btn = document.getElementById("voteBtn"); 
+        btn.onclick = function() {
+            var docRef = firebase.firestore().collection('politicalParties').doc(id);
+            
+            docRef.get().then((doc) => {
+                if (doc.exists) {
+                    var data = doc.data();
+                    var vt = data.votes; 
+                    vt++; 
+                   
+                    var pP = firebase.firestore().collection('politicalParties').doc(id);
+
+                    var setWithMerge = pP.set({
+                        votes: vt
+                    }, { merge: true });
+                     alert("You have sucessfully voted for " + name); 
+                } else {
+                    // doc.data() will be undefined in this case
+                    alert("No such document!");
+                }
+            }).catch((error) => {
+                alert("Error getting document:" + error);
+                console.log("Error getting document:", error);
+            }); 
+        }
     }; 
 
 
     img.src = logo; 
-    
+    img.className = "image";    
     anchor.appendChild(img);
-    div.appendChild(anchor);  
-    document.getElementById("imageList").appendChild(div);
+    outer_div.appendChild(anchor); 
+
+    layout.appendChild(outer_div);
 }
+
+
+function randomInteger(min, max) {
+    return Math.floor(min + Math.random()*(max - min + 1))
+}
+
+function pickSize() {
+    var size = randomInteger(1,3); 
+    /*switch(size) {
+        case 1:
+            return 'h-stretch'; 
+        case 2:
+            return 'big-stretch'; 
+        default:
+            return ""; 
+    }*/
+
+    return '';
+}
+
 
 let getPoliticalParties = function() {
 	const ref = firebase.firestore().collection('politicalParties');
